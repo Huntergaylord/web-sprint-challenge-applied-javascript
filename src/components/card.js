@@ -1,4 +1,41 @@
+import axios from 'axios';
+
 const Card = (article) => {
+  const cardElement = document.createElement('div');
+  cardElement.classList.add('card');
+
+ 
+  const headlineElement = document.createElement('div');
+  headlineElement.classList.add('headline');
+  headlineElement.textContent = article.headline;
+
+  
+  const authorContainer = document.createElement('div');
+  authorContainer.classList.add('author');
+
+ 
+  const imgContainer = document.createElement('div');
+  imgContainer.classList.add('img-container');
+  const authorImage = document.createElement('img');
+  authorImage.src = article.authorPhoto;
+  imgContainer.appendChild(authorImage);
+
+
+  const authorNameElement = document.createElement('span');
+  authorNameElement.textContent = `By ${article.authorName}`;
+
+
+  authorContainer.appendChild(imgContainer);
+  authorContainer.appendChild(authorNameElement);
+  cardElement.appendChild(headlineElement);
+  cardElement.appendChild(authorContainer);
+
+ 
+  cardElement.addEventListener('click', () => {
+    console.log(article.headline);
+  });
+
+  return cardElement;
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -20,6 +57,21 @@ const Card = (article) => {
 }
 
 const cardAppender = (selector) => {
+  axios.get(`http://localhost:5001/api/articles`)
+    .then(response => {
+      const articlesObject = response.data.articles;
+      const articlesArray = Object.values(articlesObject);
+
+      articlesArray.forEach(article => {
+        const card = Card(article);
+        const targetElement = document.querySelector(selector);
+        targetElement.appendChild(card);
+      });
+    })
+    .catch(error => {
+      console.error('Error fetching articles:', error);
+    });
+    console.log(cardAppender)
   // TASK 6
   // ---------------------
   // Implement this function that takes a css selector as its only argument.
@@ -28,6 +80,7 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
+  
 }
 
 export { Card, cardAppender }
