@@ -34,13 +34,13 @@ const tabsAppender = (selector) => {
     .then(response => {
       const topicsArray = response.data.topics;
 
-      // Create tabs using the Tabs component
+      
       const tabs = Tabs(topicsArray);
 
-      // Find the element in the DOM that matches the given selector
+    
       const targetElement = document.querySelector(selector);
 
-      // Append the tabs to the target element
+     
       targetElement.appendChild(tabs);
     })
     .catch(error => {

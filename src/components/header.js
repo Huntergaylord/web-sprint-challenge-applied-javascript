@@ -46,6 +46,7 @@ const headerAppender = (selector) => {
   const targetElement = document.querySelector(selector);
   targetElement.appendChild(header);
 
+  
  
   // TASK 2
   // ---------------------
